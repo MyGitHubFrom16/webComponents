@@ -11,3 +11,11 @@
 <content select=":not(.class)">
 <content> //все что не попадает под специфичные категории попадает сюда.
 Также не могу вставлять table tr, могу только immediate children, те в данном случае tr
+
+
+
+Тег shadow - позволяет вставлять shadow root в shadow root.
+
+
+
+Когда возникают эвенты в shadow dom, то они переправляются, как будто тригерятся с shadow host

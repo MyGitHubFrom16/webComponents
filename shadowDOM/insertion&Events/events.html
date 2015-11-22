@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Events</title>
+</head>
+<body>
+
+    <custom-elem></custom-elem>
+
+    <template id="customTemplate">
+        <button id="shadow-btn">Shadow button</button>
+        <select id="shadowInput">
+            <option value="1">1</option>
+            <option value="2">2</option>
+        </select>
+    </template>
+
+    <script>
+        var CustomElementProto = Object.create(HTMLElement.prototype);
+
+        CustomElementProto.createdCallback = function() {
+            var shadowRoot = this.createShadowRoot();
+
+            shadowRoot
+                .appendChild(document.importNode(customTemplate.content, true));
+        };
+
+        document.registerElement('custom-elem', {
+            prototype: CustomElementProto
+        });
+
+        document.addEventListener('click', (e) => {
+            console.log(e.target); //выберется не кнопка, а custom-elem
+        });
+
+        //это не сработает
+        document.addEventListener('change', (e) => {
+            console.log(e.target + ' changed');
+        });
+
+
+
+        //events: abort, error,select,change,load,reset,resize,scroll,selectstart - они не делегируются хосту, а попросту подыхают при входе в shadow dom
+
+    </script>
+
+</body>
+</html>

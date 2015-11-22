@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shadow</title>
+</head>
+<body>
+
+    <div id="host">
+        Light DOM
+    </div>
+
+    <div id="host1">
+        heavy DOM
+
+        <ul>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+        </ul>
+    </div>
+
+
+
+    <script>
+        var root = host.createShadowRoot();
+        //отрендерится только последний ShadowRoot для 1 hosta, т.е. только root2
+        var root2 = host.createShadowRoot();
+        var root3 = host.createShadowRoot();
+        var root4 = host1.createShadowRoot();
+
+        root.innerHTML = `
+            <div>Root 1</div>
+        `;
+        //так добавляю shadow root из root, причем этот shadow относится к шедоу руту из root
+        root2.innerHTML = `
+            <content></content>
+            <shadow></shadow>
+            <span>Root 2</span>
+        `;
+        //этот shadow относится к шедоу руту из root 2
+        root3.innerHTML = `
+            <content></content>
+            <shadow></shadow>
+            <div>Root 3</div>
+        `;
+
+        root4.innerHTML = `
+            <content id="contentId"></content>
+            <div>Root 4 для другого host</div>
+        `;
+
+        //тут тема такая, что каждый последующий shadow тег обращается к старейшему руту на данный момент на хосте, поэтому и получается типо наследования, 3ий на 2ой, 2ой на 1ый и т.д.
+        /*console.log(root3.olderShadowRoot);
+        console.log(root2.olderShadowRoot);
+        console.log(root.olderShadowRoot);*/
+
+        //метод, который позволяет получить массив из всего что передали в content
+        console.log(root4.querySelector('content').getDistributedNodes());
+
+        //показывает в какой content был отправлен элемент из light dom
+        console.log(document.querySelector('ul').getDestinationInsertionPoints());
+    </script>
+
+
+</body>
+</html>
