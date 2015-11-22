@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shadow Dom elements</title>
+    <style>
+        .h3 {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<!--<video controls></video>-->
+<!--<input type="range">-->
+<h3 class='h3'>Привет из dom</h3>
+<div id="host"></div>
+
+
+<script>
+    var root = host.createShadowRoot();
+
+    root.innerHTML = "<h3 class='h3'>Привет из shadow dom</h3>";
+
+    document.querySelector('.h3').addEventListener('click', (e) => console.log(e), false);
+</script>
+</body>
+</html>

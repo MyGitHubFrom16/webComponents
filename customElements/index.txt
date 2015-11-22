@@ -1,0 +1,40 @@
+Кастомные элементы должны иметь - в названии
+
+
+
+Чтобы расширить стандартный тег, нужно добавить is, например
+<input type="text" is="search-button">
+или
+var searchButton = document.createElement('button', 'search-button');
+
+
+
+Чтобы создать кастомный элемент нужно:
+1) Создать прототип
+var myElement = Object.create(HTMLElement.prototype);
+В случае, если расширяю нативный элемент, то вместо HTMLElement.prototype ставлю например HTMLButtonElement.prototype
+
+2) Регистрирую элемент
+document.registerElement('my-element');
+
+могу также расширять функционал уже созданных элементов
+document.registerElement('my-element-extended', {
+    prototype: myElement,
+    extends: 'my-element'
+});
+
+3) делаю append
+document.body.appendChild(new SlickTabs());
+либо просто вставляю элемент на страницу
+
+
+
+Callback name	Called when
+createdCallback	an instance of the element is created
+attachedCallback	an instance was inserted into the document
+detachedCallback	an instance was removed from the document
+attributeChangedCallback(attrName, oldVal, newVal)	an attribute was added, removed, or updated
+
+
+
+http://webcomponents.org/articles/how-should-i-name-my-element/ - тут советы по неймингу и зарезервирванные имена

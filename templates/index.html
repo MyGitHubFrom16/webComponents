@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Templates</title>
+</head>
+<body>
+
+<template id="myTemplate">
+    <p id="p">Template text</p>
+    <span class="verb"></span>
+
+    <template id="innerTemplate">
+        Внутренний темплейт
+    </template>
+</template>
+
+<script>
+    var template = myTemplate;
+    console.log(template);
+
+    //клонирую темплейт и затем могу его использовать, первый параметр - это все что между тегами template, второй - это deep copy
+    var clone = document.importNode(template.content, true);
+
+    var templateInner = clone.querySelector('#innerTemplate');
+    var cloneInner = document.importNode(templateInner.content, true);
+    console.log(clone);
+
+    clone.appendChild(cloneInner);
+
+    clone.querySelector(".verb").textContent = "Вставка из скрипта в темлейт";
+
+    document.body.appendChild(clone);
+</script>
+
+</body>
+</html>

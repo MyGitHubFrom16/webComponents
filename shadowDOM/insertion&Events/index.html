@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Insertion</title>
+</head>
+<body>
+    <custom-template>
+
+        <div class="footer"><div class="footer__inner">Это вообще футер, который описан перед всеми</div></div>
+        <p>Строка которая описана до h1, но появляется после</p>
+        <p>Строка 2 которая описана до h1, но появляется после</p>
+        <p>Строка 3 которая описана до h1, но появляется после</p>
+        <h1>h1 который определен в template</h1>
+
+        текст, который вставлен без селекторов
+
+    </custom-template>
+
+    <template>
+        <content select="h1"></content>
+
+        <div>
+            <content select="p"></content>
+        </div>
+
+        <content select=".footer"></content>
+
+        <!-- это не сработает, а сработает первый контент-->
+        <content select="h1"></content>
+
+        <p><content></content></p>
+    </template>
+
+    <script>
+        var CustomTemplateProto = Object.create(HTMLElement.prototype);
+
+        CustomTemplateProto.createdCallback = function() {
+            var template = document.querySelector('template');
+            var shadow = this.createShadowRoot();
+            shadow.appendChild(document.importNode(template.content, true));
+        };
+
+        document.registerElement('custom-template', {
+            prototype: CustomTemplateProto
+        });
+    </script>
+</body>
+</html>

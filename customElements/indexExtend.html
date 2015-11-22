@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Extend custom elements</title>
+</head>
+<body>
+
+    <button is="search-button">
+
+    </button>
+
+    <script>
+        var SearchButtonProto = Object.create(HTMLButtonElement.prototype);
+
+        SearchButtonProto.createdCallback = function() {
+            this.innerHTML = "Кнопка поиска";
+            this.value= "Search button";
+            this.style.color = "orange";
+        };
+
+        var SearchButton = document.registerElement('search-button', {
+            prototype: SearchButtonProto,
+            extends: 'button'
+        });
+    </script>
+
+</body>
+</html>

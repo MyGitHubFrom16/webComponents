@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contents</title>
+</head>
+<body>
+    <custom-elem>
+        То что без идентификатора
+
+        <p>То что в параграфе</p>
+
+        <div class="class">то что в элементе с .class</div>
+
+        <div id="customId">то что в #id</div>
+
+
+    </custom-elem>
+
+    <template id="myTemplate">
+        <content select="div.class"></content>
+        <content select="p"></content>
+        <content select="div#customId"></content>
+        <!-- Если поставить в начало, то так как первый контент имеет преимущество, то он заметчит все теги, классы и т.д.-->
+        <content></content>
+    </template>
+
+    <script>
+        var CustomElementProto = Object.create(HTMLElement.prototype);
+
+        CustomElementProto.createdCallback = function() {
+            this.createShadowRoot().appendChild(document.importNode(myTemplate.content, true));
+        };
+
+        document.registerElement('custom-elem', {
+           prototype: CustomElementProto
+        });
+    </script>
+</body>
+</html>

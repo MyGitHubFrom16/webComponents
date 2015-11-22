@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Callbacks</title>
+</head>
+<body>
+
+<nc-custom-element></nc-custom-element>
+
+<script>
+    var CustomElementProto = Object.create(HTMLElement.prototype);
+
+    CustomElementProto.createdCallback = function() {
+        this.innerHTML = "<div class='header'>Header of a custom element</div>";
+        this.addEventListener('click', function(e) {
+            console.log(e);
+        }, false);
+    };
+
+    CustomElementProto.attachedCallback = function() {
+        console.log('nc-custom-element is attached');
+    };
+
+    CustomElementProto.detachedCallback = function() {
+        console.log('nc-custom-element is detached');
+    };
+
+    CustomElementProto.attributeChangedCallback = function(attrName, oldVal, newVal) {
+        console.log('nc-custom-element\'s attribute is changed');
+        console.log(arguments);
+    };
+
+    var CustomElement = document.registerElement('nc-custom-element', {
+        prototype: CustomElementProto
+    });
+
+    document.querySelector('nc-custom-element').setAttribute('name', 'Max');
+    document.querySelector('nc-custom-element').setAttribute('name', 'Aliya');
+    document.querySelector('nc-custom-element').removeAttribute('name');
+
+    document.querySelector('nc-custom-element').remove();
+</script>
+</body>
+</html>

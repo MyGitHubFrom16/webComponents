@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shadow Dom elements</title>
+</head>
+<body>
+
+<div id="host"></div>
+
+<template>
+    <style>
+        .h3 {
+            color: green;
+        }
+    </style>
+    <h3 class='h3'>Привет из shadow dom</h3>
+</template>
+
+<script>
+    var root = host.createShadowRoot();
+
+    root.appendChild(document.importNode(document.querySelector('template').content, true));
+</script>
+</body>
+</html>

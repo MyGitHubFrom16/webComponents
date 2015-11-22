@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Custom Elements</title>
+</head>
+<body>
+
+<!--
+<custom-element></custom-element>
+
+<script>
+    var CustomElementProto = Object.create(HTMLElement.prototype);
+
+    console.dir(CustomElementProto);
+
+    CustomElementProto.createdCallback = function() {
+        this.innerHTML = "<p>внутренности созданного элемента</p>";
+    };
+
+    var CustomElement = document.registerElement('custom-element', {
+        prototype: CustomElementProto
+    });
+</script>
+-->
+
+
+
+<script>
+    var CustomElementProto = Object.create(HTMLElement.prototype);
+
+    CustomElementProto.createdCallback = function() {
+        this.innerHTML = "<p>внутренности созданного элемента</p>";
+    };
+
+    var CustomElement = document.registerElement('custom-element', {
+        prototype: CustomElementProto
+    });
+
+    var customElement = new CustomElement();
+
+    document.body.appendChild(customElement);
+</script>
+
+
+</body>
+</html>

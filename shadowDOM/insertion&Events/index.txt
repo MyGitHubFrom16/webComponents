@@ -1,0 +1,13 @@
+<content> - тег который могу использовать в light dom, чтобы вставить его контент в shadow dom, если их несколько то применяется первый, это insertion point
+
+а то что вставили в template - это distributed nodes
+
+могу использвать
+
+<content select="p">
+<content select=".class">
+<content select="input type=[text]">
+<content select="#id">
+<content select=":not(.class)">
+<content> //все что не попадает под специфичные категории попадает сюда.
+Также не могу вставлять table tr, могу только immediate children, те в данном случае tr
