@@ -17,14 +17,12 @@
 
 <script>
     var template = myTemplate;
-    console.log(template);
 
     //клонирую темплейт и затем могу его использовать, первый параметр - это все что между тегами template, второй - это deep copy
     var clone = document.importNode(template.content, true);
 
     var templateInner = clone.querySelector('#innerTemplate');
     var cloneInner = document.importNode(templateInner.content, true);
-    console.log(clone);
 
     clone.appendChild(cloneInner);
 

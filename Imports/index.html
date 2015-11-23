@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Imports</title>
+    <!--<link rel="import" href="list.html" id="linkList">-->
+</head>
+<body>
+
+<a href="#" onclick="getImport">Import</a>
+
+<script>
+
+    var link = document.createElement('link');
+    link.rel = "import";
+    link.id = "linkList";
+    link.href = "list.html";
+    document.head.appendChild(link);
+
+    link.onload = function() {
+        var content = linkList.import;
+        //console.log(content);
+        var list = content.querySelector('ul');
+        document.body.appendChild(list);
+    };
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+<link rel="import" href="path"> - пример импорта
+
+path - называют import location
+
+линка должна быть в <head> страницы, пока не склонировали и добавили результат import, весь html в нем находится не рендерится, типо как с template,
+а вот CSS и JS сразу загрузятся и используются
+
+также должна быть CORS (cross-origin resource sharing)
+
+
+
+var content = document.querySelector('#my-import').import; - так получаю контент импорта

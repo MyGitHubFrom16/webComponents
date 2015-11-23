@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Styling</title>
+
+    <style>
+        p {color: red;}
+
+
+        /*так могу залить стили внутрь темплейта и shadow dom, но только первого уровня*/
+        /*custom-elem::shadow p {
+            color: blue
+        }*/
+
+        /*так могу залить стили внутрь темплейта и shadow dom и всех наследников*/
+        custom-elem /deep/ p {
+            color: blue
+        }
+    </style>
+</head>
+<body class="grey">
+
+
+    <custom-elem>
+        <p class="inline">Рандомный контент внутри хоста, а не темплейта</p>
+
+        <custom-elem-new></custom-elem-new>
+    </custom-elem>
+
+    <div class="host" id="host1"></div>
+
+    <template id="template1">
+
+        <style>
+            p {color: green;}
+
+            :host {font-size: 20px;}
+
+            /*могу выбрать кастомный хост из многих*/
+            :host(.host) {font-size: 10px;}
+            :host(.host:hover) {font-size: 12px;}
+            :host(.host:active) {font-size: 13px;}
+            :host(.host:visited) {font-size: 14px;}
+            :host(.host:link) {font-size: 15px;}
+
+            :host-context(.grey) {background: #f1f1f1;}
+
+            /*перебьет p {color: red;}*/
+            ::content p {color: blue;}
+        </style>
+
+        <p>Host is styled via :host</p>
+        <shadow></shadow>
+    </template>
+
+    <template id="template2">
+        <p>Nested template</p>
+    </template>
+
+    <script>
+        var CustomElemProto = Object.create(HTMLElement.prototype);
+        var CustomElemNewProto = Object.create(HTMLElement.prototype);
+
+        var template = document.querySelector('#template1');
+        var template2 = document.querySelector('#template2');
+        var clone = document.importNode(template.content, true);
+        var clone1 = document.importNode(template.content, true);
+        var clone2 = document.importNode(template2.content, true);
+
+        CustomElemProto.createdCallback = function() {
+            this.createShadowRoot().appendChild(clone);
+        };
+
+        CustomElemNewProto.createdCallback = function() {
+            this.createShadowRoot().appendChild(clone2);
+        };
+
+        var host1El = host1.createShadowRoot();
+        host1El.appendChild(clone1);
+
+        document.registerElement('custom-elem', {
+           prototype: CustomElemProto
+        });
+
+        document.registerElement('custom-elem-new', {
+            prototype: CustomElemNewProto
+        });
+    </script>
+
+</body>
+</html>
