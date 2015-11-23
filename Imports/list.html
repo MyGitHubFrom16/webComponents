@@ -1,14 +1,43 @@
-<ul>
-    <li>Импортированный айтем 1</li>
-    <li>Импортированный айтем 2</li>
-    <li>Импортированный айтем 3</li>
-</ul>
 
 
-<p>Строка к которой обращаюсь из импортированного файла</p>
+<template>
+    <a href="#" id="view">Линка из импортированного файла</a>
+    <ul>
+        <li>Импортированный айтем 1</li>
+        <li>Импортированный айтем 2</li>
+        <li>Импортированный айтем 3</li>
+    </ul>
+</template>
 
 <script>
-    (function getImport() {
-        console.log(document.querySelector('p'));
+    (function() {
+        var Proto = Object.create(HTMLElement.prototype);
+        var importDoc = document.currentScript.ownerDocument;
+
+        Proto.createdCallback = function() {
+            var template = importDoc.querySelector('template');
+            var clone = document.importNode(template.content, true);
+            var data = clone.querySelector('#view');
+
+            data.addEventListener('click', function() {
+                console.log('текст из импортированного файла');
+            });
+
+            var root = this.createShadowRoot();
+            root.appendChild(clone);
+        };
+
+        document.registerElement('custom-elem', {
+            prototype: Proto
+        });
     })();
+
+    var importDoc = document.currentScript.ownerDocument; //это ссылка на элементы внутри данного файла
+    function getImport() {
+        console.log(document.querySelector('p')); //null, так как ищется в основном документе, а не в этом
+        console.log(importDoc);
+        console.log(importDoc.querySelector('p'));
+    }
+
+
 </script>
