@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Imports apply</title>
+    <script>
+        /*Обрабатываю ошибки перед загрузкой импорта, так как функции не инициализируются до момента загрузки импорта*/
+        function loaded(event) {
+            console.log(event);
+        }
+
+        function error(event) {
+            console.log(arguments);
+            console.log(`Ошибко при загрузке ${event.srcElement.href}`);
+        }
+    </script>
+    <link rel="import" href="import.html1" onload="loaded(event)" onerror="error(event)">
+</head>
+<body>
+
+    body text
+
+    <h1>Some text</h1>
+
+</body>
+</html>

@@ -1,0 +1,1 @@
+console.log("hi from separate js file in imported file");

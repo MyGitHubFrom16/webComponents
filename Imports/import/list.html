@@ -16,7 +16,7 @@
 
         Proto.createdCallback = function() {
             var template = importDoc.querySelector('template');
-            var clone = document.importNode(template.content, true);
+            var clone = template.content.cloneNode(true);
             var data = clone.querySelector('#view');
 
             data.addEventListener('click', function() {
@@ -32,6 +32,10 @@
         });
     })();
 
+
+    /*CSS И JS с этой страницы сработает сразу, как только вставится линка <link rel="import" href="list.html" id="linkList"> на страницу хоста, а html нет, ибо нет боди на момент загрузки импорта*/
+    //Поэтому линку и вставляют в хедер, чтобы на страничке сразу можно было ее использовать.
+    //чтобы css и js сразу не срабатывали, нужно их обернуть в template тег
     var importDoc = document.currentScript.ownerDocument; //это ссылка на элементы внутри данного файла
     function getImport() {
         console.log(document.querySelector('p')); //null, так как ищется в основном документе, а не в этом
