@@ -1,0 +1,33 @@
+<link rel="import" href="jquery.html">
+
+<template>
+    <style>
+        p {
+            color: green;
+        }
+    </style>
+
+    <p>web component 2</p>
+</template>
+
+<script>
+    (function() {
+
+        var Proto = Object.create(HTMLElement.prototype);
+        var importDoc = document.currentScript.ownerDocument;
+
+        Proto.createdCallback = function () {
+            var root = this.createShadowRoot();
+            var template = importDoc.querySelector('template');
+
+            root.appendChild(template.content.cloneNode(true));
+        };
+
+        document.registerElement('component-2', {
+            prototype: Proto
+        });
+
+        console.log($);
+
+    })();
+</script>
