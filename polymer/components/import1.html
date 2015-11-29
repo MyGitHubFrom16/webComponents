@@ -1,0 +1,66 @@
+<link rel="import" href="../assets/polymer.html">
+<link rel="import" href="../assets/jquery.html">
+
+
+
+<dom-module id="custom-element1">
+    <template>
+        <style>
+            p.paragraph {
+                color: red !important;
+            }
+            .div {
+                color: red !important;
+            }
+            span {
+                color: red !important;
+            }
+        </style>
+
+
+        <p class="paragraph">Параграф в кастомном элементе</p>
+        <div class="div">Div в кастомном элементе <span>спан в кастомном</span></div>
+    </template>
+
+    <script>
+        /*Полимер поддерживает все доступные методы, также дает возможность получить localName, в this - скоуп как в angular*/
+        Polymer({
+            is: "custom-element1",
+
+            created: function() {
+                console.log(this.localName + '#' + this.id + ' was created');
+                console.log(this.root);
+            },
+
+            attached: function() {
+                console.log(this.localName + '#' + this.id + ' was attached');
+                var p = document.createElement('p');
+                p.textContent = "Параграф";
+                Polymer.dom(this.root).appendChild(p);
+            },
+
+            detached: function() {
+                console.log(this.localName + '#' + this.id + ' was detached');
+            },
+
+            attributeChanged: function(name, type) {
+                console.log(this.localName + '#' + this.id + ' attribute ' + name +
+                        ' was changed to ' + this.getAttribute(name));
+            },
+            // этот коллбек возникает, когда все dom элементы внутри кастомного элемента готовы и ими можно манипулировать.
+            ready: function() {
+                console.log($);
+                console.log(this);
+            },
+            //так навешиваю атрибуты на кастомный элемент
+            hostAttributes: {
+                'string-attribute': 'Value',
+                'boolean-attribute': true,
+                tabindex: 0
+            }
+        });
+    </script>
+
+</dom-module>
+
+
